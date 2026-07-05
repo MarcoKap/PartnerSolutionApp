@@ -3,14 +3,26 @@ export interface ChatMessage {
   content: string
 }
 
+export type AiProvider = 'azure' | 'openai' | 'github'
+
 export interface AiConfig {
-  provider: 'azure' | 'openai'
-  /** Azure: https://<resource>.openai.azure.com — OpenAI-kompatibel: Basis-URL (z.B. https://api.openai.com) */
+  provider: AiProvider
+  /**
+   * Azure: https://<resource>.openai.azure.com
+   * OpenAI-kompatibel: Basis-URL (z.B. https://api.openai.com)
+   * GitHub Models: fest https://models.github.ai/inference (Feld wird ignoriert)
+   */
   endpoint: string
-  /** Azure: Deployment-Name — OpenAI: Modellname (z.B. gpt-4o-mini) */
+  /**
+   * Azure: Deployment-Name — OpenAI: Modellname (z.B. gpt-4o-mini)
+   * GitHub Models: Modell-ID inkl. Publisher (z.B. openai/gpt-4o-mini)
+   */
   model: string
+  /** Azure/OpenAI: API-Key — GitHub: Personal Access Token (models:read) */
   apiKey: string
 }
+
+export const GITHUB_MODELS_ENDPOINT = 'https://models.github.ai/inference'
 
 const STORAGE_KEY = 'psa-ai-config'
 
@@ -33,12 +45,20 @@ export function clearConfig() {
 
 /** Sendet eine Chat-Anfrage direkt aus dem Browser (Key verlässt nur Richtung API den Rechner). */
 export async function chat(config: AiConfig, messages: ChatMessage[]): Promise<string> {
-  const base = config.endpoint.replace(/\/+$/, '')
+  const base = (config.provider === 'github' ? GITHUB_MODELS_ENDPOINT : config.endpoint)
+    .replace(/\/+$/, '')
 
-  const url =
-    config.provider === 'azure'
-      ? `${base}/openai/deployments/${config.model}/chat/completions?api-version=2024-10-21`
-      : `${base}/v1/chat/completions`
+  let url: string
+  switch (config.provider) {
+    case 'azure':
+      url = `${base}/openai/deployments/${config.model}/chat/completions?api-version=2024-10-21`
+      break
+    case 'github':
+      url = `${base}/chat/completions`
+      break
+    default:
+      url = `${base}/v1/chat/completions`
+  }
 
   const headers: Record<string, string> = { 'Content-Type': 'application/json' }
   if (config.provider === 'azure') {
@@ -48,7 +68,7 @@ export async function chat(config: AiConfig, messages: ChatMessage[]): Promise<s
   }
 
   const body: Record<string, unknown> = { messages }
-  if (config.provider === 'openai') {
+  if (config.provider !== 'azure') {
     body.model = config.model
   }
 

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
+import Header from './Header'
 
 const nav = [
   { to: '/', label: 'Start', icon: '🏠' },
@@ -34,12 +35,20 @@ export default function Layout() {
   ))
 
   return (
-    <div className="flex min-h-screen">
+    <div className="min-h-screen">
+      <Header onToggleNav={() => setOpen(!open)} />
+
+      {/* Mobile-Navigation (unter der Kopfleiste) */}
+      {open && (
+        <nav className="fixed inset-x-0 top-14 z-30 flex flex-col gap-1 bg-brand-900 px-3 py-3 shadow-lg lg:hidden">
+          {links}
+        </nav>
+      )}
+
       {/* Sidebar (Desktop) */}
-      <aside className="hidden w-64 shrink-0 flex-col bg-brand-900 lg:flex">
-        <div className="px-5 py-6">
-          <p className="text-lg font-semibold text-white">Partner Solution Hub</p>
-          <p className="mt-1 text-xs text-brand-200">
+      <aside className="fixed top-14 bottom-0 hidden w-64 flex-col overflow-y-auto bg-brand-900 lg:flex">
+        <div className="px-5 py-5">
+          <p className="text-xs text-brand-200">
             Purview Data &amp; AI Security
           </p>
         </div>
@@ -49,26 +58,11 @@ export default function Layout() {
         </p>
       </aside>
 
-      {/* Mobile Header */}
-      <div className="flex flex-1 flex-col">
-        <header className="flex items-center justify-between bg-brand-900 px-4 py-3 lg:hidden">
-          <p className="font-semibold text-white">Partner Solution Hub</p>
-          <button
-            onClick={() => setOpen(!open)}
-            className="rounded-md p-2 text-white hover:bg-brand-800"
-            aria-label="Navigation umschalten"
-          >
-            ☰
-          </button>
-        </header>
-        {open && (
-          <nav className="flex flex-col gap-1 bg-brand-900 px-3 pb-4 lg:hidden">{links}</nav>
-        )}
-
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-8">
+      <main className="pt-14 lg:pl-64">
+        <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-8">
           <Outlet />
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   )
 }

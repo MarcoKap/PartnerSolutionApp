@@ -16,15 +16,15 @@ export default function BusinessCase() {
             <span aria-hidden>{group.icon}</span>
             {group.title}
           </h2>
-          <p className="mt-1 text-sm text-ink-500">{group.subtitle}</p>
+          <p className="mt-1 text-sm text-ink-500 dark:text-slate-400">{group.subtitle}</p>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             {group.args.map((arg) => (
               <div
                 key={arg.title}
-                className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+                className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900"
               >
-                <h3 className="font-semibold text-brand-800">{arg.title}</h3>
-                <p className="mt-2 text-sm text-ink-700">{arg.text}</p>
+                <h3 className="font-semibold text-brand-800 dark:text-brand-200">{arg.title}</h3>
+                <p className="mt-2 text-sm text-ink-700 dark:text-slate-300">{arg.text}</p>
               </div>
             ))}
           </div>
@@ -36,7 +36,7 @@ export default function BusinessCase() {
           <span aria-hidden>🪜</span>
           Die Value-Ladder: Projekt → Produkt → Managed Service
         </h2>
-        <p className="mt-1 text-sm text-ink-500">
+        <p className="mt-1 text-sm text-ink-500 dark:text-slate-400">
           Jede Stufe erhöht Planbarkeit und Marge — die Stufen bauen aufeinander auf.
         </p>
         <div className="mt-4 overflow-x-auto">
@@ -53,18 +53,22 @@ export default function BusinessCase() {
               {valueLadder.map((s, i) => (
                 <tr
                   key={s.stage}
-                  className={i % 2 === 0 ? 'bg-white' : 'bg-brand-50/60'}
+                  className={
+                    i % 2 === 0
+                      ? 'bg-white dark:bg-slate-900'
+                      : 'bg-brand-50/60 dark:bg-brand-900/20'
+                  }
                 >
-                  <td className="border-b border-slate-200 px-4 py-3 font-semibold text-brand-800">
+                  <td className="border-b border-slate-200 px-4 py-3 font-semibold text-brand-800 dark:border-slate-700 dark:text-brand-200">
                     {s.stage}
                   </td>
-                  <td className="border-b border-slate-200 px-4 py-3 text-ink-700">
+                  <td className="border-b border-slate-200 px-4 py-3 text-ink-700 dark:border-slate-700 dark:text-slate-300">
                     {s.description}
                   </td>
-                  <td className="border-b border-slate-200 px-4 py-3 text-ink-700">
+                  <td className="border-b border-slate-200 px-4 py-3 text-ink-700 dark:border-slate-700 dark:text-slate-300">
                     {s.revenue}
                   </td>
-                  <td className="border-b border-slate-200 px-4 py-3 text-ink-700">
+                  <td className="border-b border-slate-200 px-4 py-3 text-ink-700 dark:border-slate-700 dark:text-slate-300">
                     {s.margin}
                   </td>
                 </tr>

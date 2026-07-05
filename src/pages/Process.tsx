@@ -10,22 +10,22 @@ export default function Process() {
         intro="Sieben Schritte von der ersten Idee bis zum profitablen Marketplace-Offering. Jeder Schritt hat ein klares Ziel, konkrete Aktivitäten und definierte Ergebnisse — so wird Lösungsentwicklung selbst zum wiederholbaren Prozess."
       />
 
-      <ol className="relative space-y-8 border-l-2 border-brand-200 pl-6">
+      <ol className="relative space-y-8 border-l-2 border-brand-200 pl-6 dark:border-brand-700">
         {processSteps.map((step) => (
           <li key={step.id} className="relative">
             <span className="absolute -left-[37px] flex h-8 w-8 items-center justify-center rounded-full bg-brand-600 text-sm font-bold text-white">
               {step.id}
             </span>
-            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
               <h2 className="text-lg font-semibold">{step.title}</h2>
-              <p className="mt-1 text-sm font-medium text-brand-700">{step.goal}</p>
+              <p className="mt-1 text-sm font-medium text-brand-700 dark:text-brand-300">{step.goal}</p>
 
               <div className="mt-4 grid gap-4 md:grid-cols-2">
                 <div>
-                  <h3 className="text-xs font-semibold tracking-wide text-ink-500 uppercase">
+                  <h3 className="text-xs font-semibold tracking-wide text-ink-500 uppercase dark:text-slate-400">
                     Aktivitäten
                   </h3>
-                  <ul className="mt-2 space-y-1.5 text-sm text-ink-700">
+                  <ul className="mt-2 space-y-1.5 text-sm text-ink-700 dark:text-slate-300">
                     {step.activities.map((a) => (
                       <li key={a} className="flex gap-2">
                         <span className="text-brand-500">▸</span>
@@ -35,10 +35,10 @@ export default function Process() {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-xs font-semibold tracking-wide text-ink-500 uppercase">
+                  <h3 className="text-xs font-semibold tracking-wide text-ink-500 uppercase dark:text-slate-400">
                     Deliverables
                   </h3>
-                  <ul className="mt-2 space-y-1.5 text-sm text-ink-700">
+                  <ul className="mt-2 space-y-1.5 text-sm text-ink-700 dark:text-slate-300">
                     {step.deliverables.map((d) => (
                       <li key={d} className="flex gap-2">
                         <span className="text-emerald-600">✓</span>
@@ -48,7 +48,7 @@ export default function Process() {
                   </ul>
                   {step.resources.length > 0 && (
                     <>
-                      <h3 className="mt-4 text-xs font-semibold tracking-wide text-ink-500 uppercase">
+                      <h3 className="mt-4 text-xs font-semibold tracking-wide text-ink-500 uppercase dark:text-slate-400">
                         Ressourcen
                       </h3>
                       <ul className="mt-2 space-y-1 text-sm">
@@ -58,7 +58,7 @@ export default function Process() {
                               href={r.url}
                               target="_blank"
                               rel="noreferrer"
-                              className="text-brand-600 underline-offset-2 hover:underline"
+                              className="text-brand-600 underline-offset-2 hover:underline dark:text-brand-300"
                             >
                               {r.title} ↗
                             </a>

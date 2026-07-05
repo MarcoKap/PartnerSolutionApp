@@ -76,20 +76,20 @@ export default function Home() {
           <Link
             key={t.to}
             to={t.to}
-            className="group rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-brand-300 hover:shadow-md"
+            className="group rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-brand-300 hover:shadow-md dark:border-slate-700 dark:bg-slate-900 dark:hover:border-brand-500"
           >
             <span className="text-2xl" aria-hidden>
               {t.icon}
             </span>
-            <h2 className="mt-3 font-semibold group-hover:text-brand-700">{t.title}</h2>
-            <p className="mt-1 text-sm text-ink-500">{t.text}</p>
+            <h2 className="mt-3 font-semibold group-hover:text-brand-700 dark:group-hover:text-brand-300">{t.title}</h2>
+            <p className="mt-1 text-sm text-ink-500 dark:text-slate-400">{t.text}</p>
           </Link>
         ))}
       </div>
 
-      <div className="mt-10 rounded-xl border border-brand-200 bg-brand-50 p-6">
-        <h2 className="font-semibold text-brand-800">Warum dieser Hub?</h2>
-        <p className="mt-2 text-sm text-ink-700">
+      <div className="mt-10 rounded-xl border border-brand-200 bg-brand-50 p-6 dark:border-brand-700 dark:bg-brand-900/30">
+        <h2 className="font-semibold text-brand-800 dark:text-brand-200">Warum dieser Hub?</h2>
+        <p className="mt-2 text-sm text-ink-700 dark:text-slate-300">
           Die Nachfrage nach Data Security explodiert — getrieben durch AI-Einführung
           (Copilot, Agents) und Regulatorik. Partner, die jetzt{' '}
           <strong>standardisierte Purview-Offerings</strong> aufbauen, sichern sich

@@ -31,7 +31,7 @@ export default function Templates() {
             className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
               filter === f.id
                 ? 'bg-brand-600 text-white'
-                : 'bg-white text-ink-700 ring-1 ring-slate-300 hover:bg-brand-50'
+                : 'bg-white text-ink-700 ring-1 ring-slate-300 hover:bg-brand-50 dark:bg-slate-900 dark:text-slate-300 dark:ring-slate-600 dark:hover:bg-slate-800'
             }`}
           >
             {f.label}
@@ -45,7 +45,7 @@ export default function Templates() {
           return (
             <div
               key={t.id}
-              className="rounded-xl border border-slate-200 bg-white shadow-sm"
+              className="rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900"
             >
               <div className="flex flex-wrap items-center justify-between gap-3 p-5">
                 <div>
@@ -53,21 +53,21 @@ export default function Templates() {
                     <span
                       className={`rounded-md px-2 py-0.5 text-[11px] font-semibold uppercase ${
                         t.category === 'agent'
-                          ? 'bg-violet-100 text-violet-800'
-                          : 'bg-amber-100 text-amber-800'
+                          ? 'bg-violet-100 text-violet-800 dark:bg-violet-900/50 dark:text-violet-300'
+                          : 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300'
                       }`}
                     >
                       {t.category === 'agent' ? 'Agent/Skill' : 'Prompt'}
                     </span>
-                    <span className="text-xs text-ink-500">{t.format}</span>
+                    <span className="text-xs text-ink-500 dark:text-slate-400">{t.format}</span>
                   </div>
                   <h2 className="mt-1.5 font-semibold">{t.title}</h2>
-                  <p className="mt-1 max-w-2xl text-sm text-ink-500">{t.description}</p>
+                  <p className="mt-1 max-w-2xl text-sm text-ink-500 dark:text-slate-400">{t.description}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setExpanded(isOpen ? null : t.id)}
-                    className="rounded-md px-3 py-1.5 text-xs font-semibold text-brand-700 ring-1 ring-brand-300 hover:bg-brand-50"
+                    className="rounded-md px-3 py-1.5 text-xs font-semibold text-brand-700 ring-1 ring-brand-300 hover:bg-brand-50 dark:text-brand-300 dark:ring-brand-600 dark:hover:bg-brand-900/40"
                   >
                     {isOpen ? 'Einklappen' : 'Ansehen'}
                   </button>
@@ -75,7 +75,7 @@ export default function Templates() {
                 </div>
               </div>
               {isOpen && (
-                <pre className="overflow-x-auto rounded-b-xl border-t border-slate-200 bg-slate-900 p-5 text-xs leading-relaxed text-slate-100">
+                <pre className="overflow-x-auto rounded-b-xl border-t border-slate-200 bg-slate-900 p-5 text-xs leading-relaxed text-slate-100 dark:border-slate-700 dark:bg-slate-950">
                   {t.content}
                 </pre>
               )}
