@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  /* Microsoft-inspirierte Palette, Purview-Teal als Akzent */
+  --color-brand-50: #eef7f9;
+  --color-brand-100: #d5ecf1;
+  --color-brand-200: #a9d8e2;
+  --color-brand-300: #74bfce;
+  --color-brand-400: #3fa3b8;
+  --color-brand-500: #21879d;
+  --color-brand-600: #196c80;
+  --color-brand-700: #175766;
+  --color-brand-800: #174754;
+  --color-brand-900: #163c47;
+  --color-ink-900: #1b1f23;
+  --color-ink-700: #3b4248;
+  --color-ink-500: #6b7379;
+  --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-slate-50 text-ink-900 antialiased;
+}
