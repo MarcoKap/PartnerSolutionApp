@@ -4,10 +4,12 @@ import PageHeader from '../components/PageHeader'
 import {
   chat,
   clearConfig,
+  GITHUB_MODELS_ENDPOINT,
   loadConfig,
   saveConfig,
   SYSTEM_PROMPT,
   type AiConfig,
+  type AiProvider,
   type ChatMessage,
 } from '../lib/aiClient'
 
@@ -17,6 +19,9 @@ const quickPrompts = [
   'Erstelle einen Business-Case-Entwurf für ein AI Security Readiness Assessment.',
   'Wie schneide ich aus einem DLP-Projekt ein wiederholbares Festpreis-Paket?',
 ]
+
+const inputClass =
+  'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 dark:border-slate-600 dark:bg-slate-900'
 
 export default function Assistant() {
   const [config, setConfig] = useState<AiConfig | null>(() => loadConfig())
@@ -56,18 +61,18 @@ export default function Assistant() {
       <PageHeader
         eyebrow="Sparringspartner für neue Lösungen"
         title="AI-Assistant"
-        intro="Ein vorkonfigurierter Assistent für Purview-Lösungsideen: Offerings entwerfen, Business Cases prüfen, Pakete schneiden. Funktioniert mit deinem eigenen Azure-OpenAI- oder OpenAI-kompatiblen API-Key — der Key wird ausschließlich lokal im Browser gespeichert."
+        intro="Ein vorkonfigurierter Assistent für Purview-Lösungsideen: Offerings entwerfen, Business Cases prüfen, Pakete schneiden. Funktioniert mit Azure OpenAI, einem OpenAI-kompatiblen Key oder einem GitHub-Token (GitHub Models) — Zugangsdaten werden ausschließlich lokal im Browser gespeichert."
       />
 
       {/* Einstellungen */}
-      <div className="mb-6 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="mb-6 rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
         <div className="flex items-center justify-between">
           <h2 className="font-semibold">
             {config ? '🔑 Verbindung konfiguriert' : '🔑 Verbindung einrichten'}
           </h2>
           <button
             onClick={() => setShowSettings(!showSettings)}
-            className="text-sm font-medium text-brand-600 hover:underline"
+            className="text-sm font-medium text-brand-600 hover:underline dark:text-brand-300"
           >
             {showSettings ? 'Ausblenden' : 'Bearbeiten'}
           </button>
@@ -90,10 +95,10 @@ export default function Assistant() {
       </div>
 
       {!config && (
-        <div className="rounded-xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-900">
-          <p className="font-semibold">Kein API-Key hinterlegt</p>
+        <div className="rounded-xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-900 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-200">
+          <p className="font-semibold">Kein Zugang hinterlegt</p>
           <p className="mt-1">
-            Ohne Key kannst du trotzdem produktiv arbeiten: Nutze die vorgefertigten{' '}
+            Ohne Key/Token kannst du trotzdem produktiv arbeiten: Nutze die vorgefertigten{' '}
             <Link to="/templates" className="font-semibold underline">
               Prompt- und Agent-Templates
             </Link>{' '}
@@ -111,7 +116,7 @@ export default function Assistant() {
                 key={p}
                 onClick={() => send(p)}
                 disabled={busy}
-                className="rounded-full bg-brand-50 px-3 py-1.5 text-left text-xs font-medium text-brand-800 ring-1 ring-brand-200 hover:bg-brand-100 disabled:opacity-50"
+                className="rounded-full bg-brand-50 px-3 py-1.5 text-left text-xs font-medium text-brand-800 ring-1 ring-brand-200 hover:bg-brand-100 disabled:opacity-50 dark:bg-brand-900/40 dark:text-brand-200 dark:ring-brand-700 dark:hover:bg-brand-900/70"
               >
                 {p}
               </button>
@@ -119,9 +124,9 @@ export default function Assistant() {
           </div>
 
           {/* Chatverlauf */}
-          <div className="mb-4 min-h-[200px] space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="mb-4 min-h-[200px] space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
             {messages.length === 0 && (
-              <p className="text-sm text-ink-500">
+              <p className="text-sm text-ink-500 dark:text-slate-400">
                 Stelle eine Frage oder wähle einen Quick-Prompt — z.B. zum Zuschnitt
                 eines neuen Purview-Offerings.
               </p>
@@ -132,19 +137,19 @@ export default function Assistant() {
                 className={`max-w-[85%] rounded-xl px-4 py-3 text-sm whitespace-pre-wrap ${
                   m.role === 'user'
                     ? 'ml-auto bg-brand-600 text-white'
-                    : 'bg-slate-100 text-ink-900'
+                    : 'bg-slate-100 text-ink-900 dark:bg-slate-800 dark:text-slate-100'
                 }`}
               >
                 {m.content}
               </div>
             ))}
             {busy && (
-              <div className="max-w-[85%] rounded-xl bg-slate-100 px-4 py-3 text-sm text-ink-500">
+              <div className="max-w-[85%] rounded-xl bg-slate-100 px-4 py-3 text-sm text-ink-500 dark:bg-slate-800 dark:text-slate-400">
                 Denkt nach…
               </div>
             )}
             {error && (
-              <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-800">
+              <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-800 dark:bg-red-900/30 dark:text-red-300">
                 {error}
               </div>
             )}
@@ -163,7 +168,7 @@ export default function Assistant() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Deine Frage zur Lösungsentwicklung…"
-              className="flex-1 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm shadow-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-200 focus:outline-none"
+              className="flex-1 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm shadow-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-200 focus:outline-none dark:border-slate-600 dark:bg-slate-900"
             />
             <button
               type="submit"
@@ -179,6 +184,33 @@ export default function Assistant() {
   )
 }
 
+const providerInfo: Record<
+  AiProvider,
+  { endpointLabel: string; endpointPlaceholder: string; modelLabel: string; modelPlaceholder: string; keyLabel: string }
+> = {
+  azure: {
+    endpointLabel: 'Endpoint',
+    endpointPlaceholder: 'https://mein-resource.openai.azure.com',
+    modelLabel: 'Deployment-Name',
+    modelPlaceholder: 'gpt-4o-mini',
+    keyLabel: 'API-Key (bleibt lokal im Browser)',
+  },
+  openai: {
+    endpointLabel: 'Basis-URL',
+    endpointPlaceholder: 'https://api.openai.com',
+    modelLabel: 'Modell',
+    modelPlaceholder: 'gpt-4o-mini',
+    keyLabel: 'API-Key (bleibt lokal im Browser)',
+  },
+  github: {
+    endpointLabel: 'Endpoint (fest)',
+    endpointPlaceholder: GITHUB_MODELS_ENDPOINT,
+    modelLabel: 'Modell (publisher/modell)',
+    modelPlaceholder: 'openai/gpt-4o-mini',
+    keyLabel: 'GitHub Token mit models:read (bleibt lokal im Browser)',
+  },
+}
+
 function SettingsForm({
   initial,
   onSave,
@@ -188,68 +220,97 @@ function SettingsForm({
   onSave: (c: AiConfig) => void
   onClear: () => void
 }) {
-  const [provider, setProvider] = useState<'azure' | 'openai'>(initial?.provider ?? 'azure')
+  const [provider, setProvider] = useState<AiProvider>(initial?.provider ?? 'azure')
   const [endpoint, setEndpoint] = useState(initial?.endpoint ?? '')
   const [model, setModel] = useState(initial?.model ?? '')
   const [apiKey, setApiKey] = useState(initial?.apiKey ?? '')
 
-  const valid = endpoint.trim() && model.trim() && apiKey.trim()
+  const info = providerInfo[provider]
+  const isGithub = provider === 'github'
+  const valid = (isGithub || endpoint.trim()) && model.trim() && apiKey.trim()
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault()
-        if (valid) onSave({ provider, endpoint: endpoint.trim(), model: model.trim(), apiKey: apiKey.trim() })
+        if (valid)
+          onSave({
+            provider,
+            endpoint: isGithub ? GITHUB_MODELS_ENDPOINT : endpoint.trim(),
+            model: model.trim(),
+            apiKey: apiKey.trim(),
+          })
       }}
-      className="mt-4 grid gap-3 sm:grid-cols-2"
+      className="mt-4 grid gap-3 text-sm sm:grid-cols-2"
     >
-      <label className="text-sm">
+      <label>
         <span className="mb-1 block font-medium">Provider</span>
         <select
           value={provider}
-          onChange={(e) => setProvider(e.target.value as 'azure' | 'openai')}
-          className="w-full rounded-lg border border-slate-300 px-3 py-2"
+          onChange={(e) => setProvider(e.target.value as AiProvider)}
+          className={inputClass}
         >
           <option value="azure">Azure OpenAI</option>
           <option value="openai">OpenAI-kompatibel</option>
+          <option value="github">GitHub Models (GitHub Token)</option>
         </select>
       </label>
-      <label className="text-sm">
-        <span className="mb-1 block font-medium">
-          {provider === 'azure' ? 'Endpoint (https://<resource>.openai.azure.com)' : 'Basis-URL (z.B. https://api.openai.com)'}
-        </span>
+      <label>
+        <span className="mb-1 block font-medium">{info.endpointLabel}</span>
         <input
-          value={endpoint}
+          value={isGithub ? GITHUB_MODELS_ENDPOINT : endpoint}
           onChange={(e) => setEndpoint(e.target.value)}
-          placeholder={provider === 'azure' ? 'https://mein-resource.openai.azure.com' : 'https://api.openai.com'}
-          className="w-full rounded-lg border border-slate-300 px-3 py-2"
+          placeholder={info.endpointPlaceholder}
+          disabled={isGithub}
+          className={`${inputClass} disabled:opacity-60`}
         />
       </label>
-      <label className="text-sm">
-        <span className="mb-1 block font-medium">
-          {provider === 'azure' ? 'Deployment-Name' : 'Modell'}
-        </span>
+      <label>
+        <span className="mb-1 block font-medium">{info.modelLabel}</span>
         <input
           value={model}
           onChange={(e) => setModel(e.target.value)}
-          placeholder={provider === 'azure' ? 'gpt-4o-mini' : 'gpt-4o-mini'}
-          className="w-full rounded-lg border border-slate-300 px-3 py-2"
+          placeholder={info.modelPlaceholder}
+          className={inputClass}
         />
       </label>
-      <label className="text-sm">
-        <span className="mb-1 block font-medium">API-Key (bleibt lokal im Browser)</span>
+      <label>
+        <span className="mb-1 block font-medium">{info.keyLabel}</span>
         <input
           type="password"
           value={apiKey}
           onChange={(e) => setApiKey(e.target.value)}
-          className="w-full rounded-lg border border-slate-300 px-3 py-2"
+          className={inputClass}
         />
       </label>
+      {isGithub && (
+        <p className="text-xs text-ink-500 sm:col-span-2 dark:text-slate-400">
+          Fine-grained Personal Access Token unter{' '}
+          <a
+            href="https://github.com/settings/personal-access-tokens"
+            target="_blank"
+            rel="noreferrer"
+            className="text-brand-600 underline dark:text-brand-300"
+          >
+            github.com/settings/personal-access-tokens
+          </a>{' '}
+          erstellen und die Berechtigung <strong>Models: Read-only</strong> vergeben.
+          Verfügbare Modelle:{' '}
+          <a
+            href="https://github.com/marketplace/models"
+            target="_blank"
+            rel="noreferrer"
+            className="text-brand-600 underline dark:text-brand-300"
+          >
+            github.com/marketplace/models
+          </a>
+        </p>
+      )}
       <div className="flex gap-2 sm:col-span-2">
         <button
           type="submit"
           disabled={!valid}
-          className="rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white hover:bg-brand-700 disabled:opacity-50"
+          className="rounded-lg bg-brand-600 px-4 py-2 font-semibold text-white hover:bg-brand-700 disabled:opacity-50"
         >
           Speichern
         </button>
@@ -257,7 +318,7 @@ function SettingsForm({
           <button
             type="button"
             onClick={onClear}
-            className="rounded-lg px-4 py-2 text-sm font-semibold text-red-700 ring-1 ring-red-300 hover:bg-red-50"
+            className="rounded-lg px-4 py-2 font-semibold text-red-700 ring-1 ring-red-300 hover:bg-red-50 dark:text-red-400 dark:ring-red-700 dark:hover:bg-red-900/30"
           >
             Verbindung löschen
           </button>

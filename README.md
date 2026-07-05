@@ -10,7 +10,8 @@ rund um **Microsoft Purview (Data Security & AI Security)** entwickeln.
 - **Wissens-Hub** — kuratierte Links (Purview, DSPM for AI, Partner Center, Co-Sell)
 - **Beispiel-Lösungen** — 4 Offering-Blaupausen (DLP Quickstart, AI Security Assessment, IRM Pilot, Managed Service)
 - **Templates** — Skill-/Agent-Templates und Prompts mit Copy-Button
-- **AI-Assistant** — Chat mit eigenem Azure-OpenAI-/OpenAI-Key (bleibt lokal im Browser)
+- **AI-Assistant** — Chat mit eigenem Azure-OpenAI-/OpenAI-Key oder GitHub-Token
+  (GitHub Models, `models:read`) — Zugangsdaten bleiben lokal im Browser
 
 ## Entwicklung
 

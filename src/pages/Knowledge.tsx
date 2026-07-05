@@ -33,11 +33,11 @@ export default function Knowledge() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Suchen… (z.B. DLP, Co-Sell, MACC)"
-        className="mb-8 w-full max-w-md rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm shadow-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-200 focus:outline-none"
+        className="mb-8 w-full max-w-md rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm shadow-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-200 focus:outline-none dark:border-slate-600 dark:bg-slate-900"
       />
 
       {filtered.length === 0 && (
-        <p className="text-ink-500">Keine Treffer für „{query}“.</p>
+        <p className="text-ink-500 dark:text-slate-400">Keine Treffer für „{query}“.</p>
       )}
 
       {filtered.map((cat) => (
@@ -53,12 +53,12 @@ export default function Knowledge() {
                 href={link.url}
                 target="_blank"
                 rel="noreferrer"
-                className="group rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition hover:border-brand-300 hover:shadow-md"
+                className="group rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition hover:border-brand-300 hover:shadow-md dark:border-slate-700 dark:bg-slate-900 dark:hover:border-brand-500"
               >
-                <h3 className="text-sm font-semibold text-brand-700 group-hover:underline">
+                <h3 className="text-sm font-semibold text-brand-700 group-hover:underline dark:text-brand-300">
                   {link.title} ↗
                 </h3>
-                <p className="mt-1 text-xs text-ink-500">{link.description}</p>
+                <p className="mt-1 text-xs text-ink-500 dark:text-slate-400">{link.description}</p>
               </a>
             ))}
           </div>
