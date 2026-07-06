@@ -1,3 +1,89 @@
+export interface MarketStat {
+  value: string
+  label: string
+  source: string
+  sourceUrl: string
+}
+
+/** Belegte Zahlen für die KPI-Kacheln — Quellen bei Aktualisierung prüfen. */
+export const marketStats: MarketStat[] = [
+  {
+    value: '8,45 $',
+    label: 'verdienen Services-Partner je 1 $ Microsoft-Umsatz (Software-Partner: 10,93 $)',
+    source: 'IDC / Microsoft, 2024',
+    sourceUrl: 'https://blogs.microsoft.com/blog/2025/03/24/microsoft-at-50-the-journey-and-future-of-the-partner-ecosystem/',
+  },
+  {
+    value: '46 % vs. 19 %',
+    label: 'Bruttomarge: Managed Services schlagen Projektgeschäft um mehr als das Doppelte',
+    source: 'Service Leadership Index, 2024',
+    sourceUrl: 'https://www.connectwise.com/company/press/releases/2024-08-06-service-leadership-q2-data-report',
+  },
+  {
+    value: '74 %',
+    label: 'des MSP-Umsatzes ist heute wiederkehrend — der Markt hat den Wandel längst vollzogen',
+    source: 'MSP-Branchenbenchmark, 2025',
+    sourceUrl: 'https://pharallax.ai/guides/msp-revenue-benchmarks-2026/',
+  },
+  {
+    value: '157+ Mrd. $',
+    label: 'committete Azure-Kundenbudgets (MACC), +33 % pro Jahr — abrufbar über Marketplace-Offers',
+    source: 'Microsoft, FY2025',
+    sourceUrl: 'https://invisory.co/resources/blog/what-microsofts-boom-in-cloud-commits-macc-means-for-azure-marketplace/',
+  },
+  {
+    value: '85 %',
+    label: 'der Kunden mit Cloud-Commitment kaufen bereits Partnerlösungen über den Marketplace',
+    source: 'Microsoft Azure Blog',
+    sourceUrl: 'https://azure.microsoft.com/en-us/blog/microsoft-commercial-marketplace-spend-smarter-move-faster/',
+  },
+  {
+    value: '6 Mio.',
+    label: 'monatliche Besucher im Microsoft Marketplace — Reichweite ohne eigenes Marketing',
+    source: 'Microsoft Azure Blog',
+    sourceUrl: 'https://azure.microsoft.com/en-us/blog/microsoft-commercial-marketplace-spend-smarter-move-faster/',
+  },
+]
+
+export interface Objection {
+  objection: string
+  answer: string
+}
+
+/** Typische Partner-Einwände mit Gegenargumenten (Accordion im Business Case). */
+export const objections: Objection[] = [
+  {
+    objection: '„Unsere Kunden sind alle unterschiedlich — das lässt sich nicht standardisieren."',
+    answer:
+      'Die Kunden sind unterschiedlich, die Probleme selten: Labels einführen, DLP aufsetzen, Copilot absichern folgt bei 80 % der Kunden demselben Muster. Standardisiert wird die Methodik (Discovery-Fragen, Policy-Baukasten, Report-Struktur) — die restlichen 20 % bleiben individuell und werden als Add-on bepreist. Genau diese 80/20-Trennung ist der Margenhebel.',
+  },
+  {
+    objection: '„Festpreis ist zu riskant — wenn wir uns verschätzen, zahlen wir drauf."',
+    answer:
+      'Beim ersten Projekt stimmt das — deshalb startet man mit einem Pilotkunden zu T&M-Konditionen und misst die Aufwände. Ab Projekt drei kennt man die echte Spanne. Das Risiko sinkt mit jeder Wiederholung, während es bei T&M konstant bleibt: Dort trägt der Vertrieb das Risiko in jedem einzelnen Deal neu.',
+  },
+  {
+    objection: '„Der Marketplace lohnt sich nur für Software-Hersteller, nicht für uns."',
+    answer:
+      'Consulting Services und Managed Services sind eigene Offer-Typen im Marketplace. Der eigentliche Wert liegt nicht im Transaktionsvolumen, sondern in Sichtbarkeit bei Microsoft-Sellern (Co-Sell), MACC-Anrechnung beim Kunden und dem Signal an Account-Teams: Dieser Partner hat ein fertiges Angebot. 85 % der MACC-Kunden kaufen bereits Partnerlösungen über den Marketplace.',
+  },
+  {
+    objection: '„Wir haben keine Kapazität, neben dem Tagesgeschäft ein Offering zu bauen."',
+    answer:
+      'Ein Offering entsteht nicht neben dem Tagesgeschäft, sondern daraus: Das nächste passende Kundenprojekt wird bewusst als Blaupause geführt — Aufwände messen, Assets ablegen, Templates generalisieren. Der Mehraufwand liegt bei 10–15 %, das Ergebnis ist wiederverwendbar. Microsoft unterstützt zudem mit Enablement, Templates und Co-Sell-Ressourcen.',
+  },
+  {
+    objection: '„Managed Services drücken unseren Umsatz — ein Projekt bringt sofort mehr."',
+    answer:
+      'Ein Projekt bringt einmalig Umsatz bei ~19 % Bruttomarge, ein Managed Service bringt planbaren Umsatz bei ~46 % Marge (Service Leadership Index). Dazu kommt der Unternehmenswert: Wiederkehrender Umsatz wird bei Firmenbewertungen mit einem Mehrfachen des Projektgeschäfts bewertet. Die Frage ist nicht Umsatz heute, sondern Marge und Bewertung in drei Jahren.',
+  },
+  {
+    objection: '„Purview ist doch nur ein Lizenz-Feature — was sollen wir da beraten?"',
+    answer:
+      'Die Lizenz ist der Anfang, nicht die Lösung: Label-Taxonomie, Policy-Design, Betriebsrats-Abstimmung, Alert-Triage und kontinuierliches Tuning macht das Produkt nicht von selbst. Genau diese Lücke zwischen „Lizenz vorhanden" und „Daten geschützt" ist das Geschäftsmodell — und mit der Copilot-Welle wächst sie gerade massiv.',
+  },
+]
+
 export interface Argument {
   title: string
   text: string

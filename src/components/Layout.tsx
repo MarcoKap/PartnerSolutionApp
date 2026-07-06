@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import Header from './Header'
+import Icon, { type IconName } from './Icon'
 
-const nav = [
-  { to: '/', label: 'Start', icon: '🏠' },
-  { to: '/process', label: 'Entwicklungsprozess', icon: '🗺️' },
-  { to: '/business-case', label: 'Business Case', icon: '📈' },
-  { to: '/knowledge', label: 'Wissens-Hub', icon: '📚' },
-  { to: '/solutions', label: 'Beispiel-Lösungen', icon: '💡' },
-  { to: '/templates', label: 'Templates', icon: '🧩' },
-  { to: '/assistant', label: 'AI-Assistant', icon: '✨' },
+const nav: { to: string; label: string; icon: IconName }[] = [
+  { to: '/', label: 'Start', icon: 'home' },
+  { to: '/business-case', label: 'Business Case', icon: 'chart' },
+  { to: '/process', label: 'Entwicklungsprozess', icon: 'route' },
+  { to: '/knowledge', label: 'Wissens-Hub', icon: 'book' },
+  { to: '/solutions', label: 'Beispiel-Lösungen', icon: 'bulb' },
+  { to: '/templates', label: 'Templates', icon: 'grid' },
+  { to: '/assistant', label: 'AI-Assistant', icon: 'sparkle' },
 ]
 
 export default function Layout() {
@@ -29,7 +30,7 @@ export default function Layout() {
         }`
       }
     >
-      <span aria-hidden>{item.icon}</span>
+      <Icon name={item.icon} className="h-[18px] w-[18px]" />
       {item.label}
     </NavLink>
   ))
