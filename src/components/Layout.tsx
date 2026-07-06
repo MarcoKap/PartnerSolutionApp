@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import Header from './Header'
 import Icon, { type IconName } from './Icon'
 
@@ -15,6 +15,12 @@ const nav: { to: string; label: string; icon: IconName }[] = [
 
 export default function Layout() {
   const [open, setOpen] = useState(false)
+  const { pathname } = useLocation()
+
+  // Bei Seitenwechsel immer oben starten (instant, nicht smooth)
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [pathname])
 
   const links = nav.map((item) => (
     <NavLink
